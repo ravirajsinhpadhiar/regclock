@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "reviewed": "2026-11-17",
+  "note": "Deadlines only. Whether an incident is reportable at all is a legal classification this file does not make.",
+  "regimes": [
+    {
+      "id": "dora",
+      "name": "DORA major ICT-related incident",
+      "jurisdiction": "EU",
+      "authority": "National competent authority of the financial entity",
+      "applies_to": "EU financial entities, for incidents classified as major under Delegated Regulation (EU) 2024/1772",
+      "sources": [
+        {
+          "title": "Regulation (EU) 2022/2554 (DORA), Article 19",
+          "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+        },
+        {
+          "title": "Commission Delegated Regulation (EU) 2025/301, Article 5 (time limits)",
+          "url": "https://eur-lex.europa.eu/eli/reg_del/2025/301/oj"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "initial",
+          "label": "Initial notification",
+          "rule": "Within 4 hours of classifying the incident as major, and no later than 24 hours after becoming aware of it",
+          "after": { "event": "classified", "hours": 4 },
+          "cap": { "event": "aware", "hours": 24 },
+          "cite": "Delegated Regulation (EU) 2025/301, Art. 5(1)(a)"
+        },
+        {
+          "id": "intermediate",
+          "label": "Intermediate report",
+          "rule": "Within 72 hours of submitting the initial notification",
+          "after": { "event": "initial_submitted", "hours": 72, "else_obligation": "initial" },
+          "cite": "Delegated Regulation (EU) 2025/301, Art. 5(1)(b)"
+        },
+        {
+          "id": "final",
+          "label": "Final report",
+          "rule": "Within one month of the latest intermediate report",
+          "after": { "event": "intermediate_submitted", "months": 1, "else_obligation": "intermediate" },
+          "cite": "Delegated Regulation (EU) 2025/301, Art. 5(1)(c)"
+        }
+      ],
+      "caveats": [
+        "Art. 5 lets certain entities submit by noon of the next working day when a time limit falls on a weekend or public holiday. regclock does not apply that extension; it shows the unextended time.",
+        "An updated intermediate report is also due without delay once regular activities have recovered."
+      ]
+    },
+    {
+      "id": "nis2",
+      "name": "NIS2 significant incident",
+      "jurisdiction": "EU",
+      "authority": "National CSIRT or competent authority",
+      "applies_to": "Essential and important entities, for significant incidents",
+      "sources": [
+        {
+          "title": "Directive (EU) 2022/2555 (NIS2), Article 23(4)",
+          "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "early_warning",
+          "label": "Early warning",
+          "rule": "Within 24 hours of becoming aware of the significant incident",
+          "after": { "event": "aware", "hours": 24 },
+          "cite": "Directive (EU) 2022/2555, Art. 23(4)(a)"
+        },
+        {
+          "id": "notification",
+          "label": "Incident notification",
+          "rule": "Within 72 hours of becoming aware of the significant incident",
+          "after": { "event": "aware", "hours": 72 },
+          "cite": "Directive (EU) 2022/2555, Art. 23(4)(b)"
+        },
+        {
+          "id": "final",
+          "label": "Final report",
+          "rule": "Within one month of submitting the incident notification",
+          "after": { "event": "notification_submitted", "months": 1, "else_obligation": "notification" },
+          "cite": "Directive (EU) 2022/2555, Art. 23(4)(d)"
+        }
+      ],
+      "caveats": [
+        "NIS2 is a directive: the binding text is each Member State's transposition, which may add detail. Check the national law.",
+        "Trust service providers must send the incident notification within 24 hours, not 72.",
+        "If the incident is still ongoing when the final report is due, a progress report is due then and the final report within one month of handling the incident."
+      ]
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR personal data breach",
+      "jurisdiction": "EU",
+      "authority": "Data protection supervisory authority",
+      "applies_to": "Controllers, where the breach is likely to result in a risk to individuals",
+      "sources": [
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 33(1)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "notification",
+          "label": "Notification to supervisory authority",
+          "rule": "Without undue delay and, where feasible, within 72 hours of becoming aware of the breach",
+          "after": { "event": "aware", "hours": 72 },
+          "cite": "Regulation (EU) 2016/679, Art. 33(1)"
+        }
+      ],
+      "caveats": [
+        "A later notification must be accompanied by reasons for the delay.",
+        "Notifying the affected individuals (Art. 34) has no fixed hour limit and is not tracked here."
+      ]
+    },
+    {
+      "id": "finma",
+      "name": "FINMA cyber attack report",
+      "jurisdiction": "Switzerland",
+      "authority": "FINMA (key account manager, then the EHP platform)",
+      "applies_to": "FINMA-supervised institutions, for cyber attacks of material importance under Art. 29(2) FINMASA",
+      "sources": [
+        {
+          "title": "FINMA Guidance 05/2020, Duty to report cyber attacks pursuant to Article 29 para. 2 FINMASA",
+          "url": "https://www.finma.ch/en/documentation/finma-guidance/"
+        },
+        {
+          "title": "FINMA Guidance 03/2024, Findings from cyber risk supervision and clarification of Guidance 05/2020",
+          "url": "https://www.finma.ch/en/documentation/finma-guidance/"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "initial",
+          "label": "Initial report to key account manager",
+          "rule": "Within 24 hours of detecting the cyber attack",
+          "after": { "event": "aware", "hours": 24 },
+          "cite": "FINMA Guidance 05/2020, as clarified by Guidance 03/2024"
+        },
+        {
+          "id": "report",
+          "label": "Full report via EHP",
+          "rule": "Within 72 hours of detecting the cyber attack",
+          "after": { "event": "aware", "hours": 72 },
+          "cite": "FINMA Guidance 05/2020, as clarified by Guidance 03/2024"
+        }
+      ],
+      "caveats": [
+        "Guidance 03/2024 counts the 24 and 72 hours on official bank working days, except that attacks of severity 'severe' must be reported within 24 hours on any day. regclock shows plain clock time, which is never later than the working-day reading.",
+        "A root cause analysis is also expected for attacks of medium severity and above once the case is closed. The guidance sets no fixed hour limit for it, so it is not scheduled here.",
+        "Institutions also covered by the Information Security Act may file the 24-hour report through the NCSC form and have it forwarded to FINMA."
+      ]
+    },
+    {
+      "id": "ch-isa",
+      "name": "Swiss Information Security Act cyberattack report",
+      "jurisdiction": "Switzerland",
+      "authority": "National Cyber Security Centre (NCSC)",
+      "applies_to": "Operators of critical infrastructure, in force since 1 April 2025",
+      "sources": [
+        {
+          "title": "NCSC: Obligation to report cyberattacks on critical infrastructure",
+          "url": "https://www.ncsc.admin.ch/ncsc/en/home/aktuell/im-fokus/2025/meldepflicht.html"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "initial",
+          "label": "Initial report to NCSC",
+          "rule": "Within 24 hours of discovering the cyberattack",
+          "after": { "event": "aware", "hours": 24 },
+          "cite": "Information Security Act (ISA), amendment of 29 September 2023"
+        },
+        {
+          "id": "completion",
+          "label": "Completed report",
+          "rule": "Within 14 days where not all information was available for the initial report",
+          "after": { "event": "aware", "hours": 24, "then_days": 14 },
+          "cite": "NCSC guidance on the ISA reporting obligation"
+        }
+      ],
+      "caveats": [
+        "regclock counts the 14 days from the 24-hour deadline. Confirm with the NCSC from which moment the 14 days run in your case.",
+        "Fines for failing to report have applied since 1 October 2025."
+      ]
+    },
+    {
+      "id": "cert-in",
+      "name": "CERT-In cyber incident report",
+      "jurisdiction": "India",
+      "authority": "Indian Computer Emergency Response Team (CERT-In)",
+      "applies_to": "Service providers, intermediaries, data centres, bodies corporate and government organisations, for incident types in Annexure I",
+      "sources": [
+        {
+          "title": "CERT-In Directions No. 20(3)/2022-CERT-In of 28 April 2022 under section 70B(6) of the IT Act, 2000",
+          "url": "https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "report",
+          "label": "Incident report",
+          "rule": "Within 6 hours of noticing the incident or being told of it",
+          "after": { "event": "aware", "hours": 6 },
+          "cite": "CERT-In Directions of 28 April 2022, direction (ii)"
+        }
+      ],
+      "caveats": [
+        "The Directions have applied since 27 June 2022."
+      ]
+    }
+  ]
+}
